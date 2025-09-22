@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Notes Book ya Mauzo - Toleo Kamili</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>          
+    /* Sidebar */
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      background-color:   gray; /* gray*/
+      overflow-x: hidden;
+      transition: 0.4s;
+      padding-top: 60px;
+    }
+
+    .sidebar a {
+      padding: 12px 24px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #f1f1f1;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #2563eb; /* lighter blue*/
+      color: #fff;
+    }
+
+    .sidebar .closebtn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Button ya kufungua sidebar */
+    .openbtn {
+      font-size: 20px;
+      cursor: pointer;
+      background-color: #1e3a8a;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      border-radius: 6px;
+    }
+
+    .openbtn:hover {
+      background-color:#2563eb;
+    }      
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --info: #4895ef;
+            --warning: #f72585;
+            --danger: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --background: #f5f7fa;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --border: #dee2e6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+
+        .dark-mode {
+            --primary: #4cc9f0;
+            --secondary: #4895ef;
+            --background: #121212;
+            --card-bg: #1e1e1e;
+            --text: #f5f5f5;
+            --border: #444;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+/* Consistent section heading style */
+.section-header {
+    font-size: 2rem !important;
+    color: #2c3e50 !important;
+    margin-bottom: 25px !important;
+    padding-bottom: 15px !important;
+    border-bottom: 2px solid #ecf0f1 !important;
+    text-align: center !important;
+    position: relative !important;
+    font-weight: bold !important;
+}
+
+.section-header::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 80px !important;
+    height: 4px !important;
+    background-color: #3498db !important;
+    border-radius: 2px !important;
+}
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .app-title {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .app-description {
+            font-size: 1rem;
+            opacity: 0.9;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 1000px) {
+            .main-content {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background-color: var(--card-bg);
+            color: var(--text);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 4px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .summary-card h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .summary-card .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space around;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: nowrap;
+        }
+
+        .tab {
+            flex:1;
+            text-align:center;
+            padding: 12px 0px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            border-radius: var(--radius);
+            background-color: var(--success);
+            color: white;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .badge-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text);
+            opacity: 0.7;
+        }
+
+        .info-content {
+            line-height: 1.8;
+        }
+
+        .info-content h3 {
+            margin: 20px 0 10px;
+            color: var(--primary);
+        }
+
+        .info-content ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .info-content p {
+            margin-bottom: 15px;
+        }
+
+        .policy-section {
+            margin-bottom: 25px;
+        }
+        
+        
+           /* AI Chat Interface */
+        .ai-chat-container {
+            position: fixed;
+            bottom: 30px;
+            right: 15px;
+            width: 450px;
+            height: 450px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .ai-chat-header {
+            background: linear-gradient(135deg, #ff6b35, #e85a2a);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ai-chat-title {
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .ai-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+        
+        .ai-chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .ai-message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            
+            
+        }
+        
+        .ai-bot {
+            background: #2C4A7A;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .ai-user {
+            background: #0000FF;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .ai-chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            background: white;
+        }
+        
+        .ai-chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        .ai-send-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 40%;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .ai-chat-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b35, #e85a2a);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 999;
+        }
+        
+        .ai-chat-btn i {
+            font-size: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+            
+            .nav-item {
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .ai-chat-container {
+                width: 90%;
+                right: 5%;
+                bottom: 80px;
+                height: 60%;
+            }
+           }
+              
+  </style>
+</head>
+<body>
+           
+    
+    <div id="mySidebar" class="sidebar">
+    <span class="closebtn" onclick="closeNav()">&times;</span>
+    <div class="tab" data-tab="info">Maelezo</div>
+    <div class="tab" data-tab="policy">Sera</div>
+    <div class="tab" data-tab="chat">Chat</div>
+</div>
+    
+      <!-- Button ya kufungua-->
+      <button class="openbtn" onclick="openNav()">☰</button>
+             
+                         
+      
+  <br></br>
+        
+    <div id="main"
+    <div class="container">
+        <header>
+            <div>
+                <h1 class="app-title">Notes Book ya Mauzo</h1>
+                <p class="app-description">Mfumo kamili wa usimamizi wa mauzo na wateja</p>
+            </div>
+            <div class="controls">
+                <button class="btn btn-primary" id="theme-toggle">
+                    <i class="fas fa-moon"></i> Badilisha Muda
+                </button>
+                
+                <button class="btn btn-secondary" id="backup-btn">
+                    <i class="fas fa-download"></i> Hifadhi Data
+                </button>
+                        
+       
+        <button class="control-btn" id="openAiChat" style="background: #ff6b35;"> Chat na IA</button>
+        </div>
+                
+                <!-- AI Chat Interface -->
+    <div class="ai-chat-container" id="aiChatContainer">
+        <div class="ai-chat-header">
+            <div class="ai-chat-title">
+                <i class="fas fa-robot"></i> Msaada wa AI
+            </div>
+            <button class="ai-close-btn" id="closeAiChat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="ai-chat-messages" id="aiChatMessages">
+            <div class="ai-message ai-bot">
+                Halo! Mimi ni msaidizi wako wa AI. Ninaweza kukusaidia kujua jinsi ya kutumia mfumo wa Notes Book ya Mauzo. Unaweza kuuliza maswali kuhusu:
+                <br><br>
+                - Jinsi ya kuongeza mauzo mapya<br>
+                - Jinsi ya kudhibiti wateja<br>
+                - Jinsi ya kuona takwimu za mauzo<br>
+                - Jinsi ya kusimamia deni<br>
+                - na maswali mengineyo!
+            </div>
+        </div>
+        <div class="ai-chat-input">
+            <input type="text" id="aiChatInput" placeholder="Andika swali lako hapa...">
+            <button class="ai-send-btn" id="aiSendBtn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+       </div>
+     </div>
+     <div class="ai-chat-btn" id="aiChatBtn">
+        <i class="fas fa-robot"></i>      
+     </div>                                     
+           
+     
+
+   <div class="tabs">
+            <div class="tab active" data-tab="sales">Mauzo</div>            
+           <div class="tab" data-tab="customers">Wateja</div>           
+            <div class="tab" data-tab="products">Bidhaa</div>
+            <div class="tab" data-tab="analytics">Takwimu</div>
+            <div class="tab" data-tab="debts">Deni</div>
+          </div>
+  
+    
+      
+    
+    
+        <div class="tab-content active" id="sales-tab">
+            <!-- Sales content remains the same as before -->
+            <div class="main-content">
+                <div class="card">
+                    <h2 class="card-title">Ongeza Mauzo Mapya</h2>
+                    <form id="sales-form">
+                        <div class="form-group">
+                            <label for="product">Bidhaa</label>
+                            <select id="product" required>
+                                <option value="">Chagua bidhaa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Idadi</label>
+                            <input type="number" id="quantity" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Bei (TSh)</label>
+                            <input type="number" id="price" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer">Mteja</label>
+                            <select id="customer">
+                                <option value="">Chagua mteja</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Tarehe</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-type">Aina ya Malipo</label>
+                            <select id="payment-type">
+                                <option value="cash">Fedha taslimu</option>
+                                <option value="debt">Deni</option>
+                                <option value="mobile">Malipo ya simu</option>
+                                <option value="card">Kadi</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Weka Mauzo</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Orodha ya Mauzo <span class="badge badge-success" id="sales-count">0</span></h2>
+                    <div style="overflow-x: auto;">
+                        <table id="sales-table">
+                            <thead>
+                                <tr>
+                                    <th>Tarehe</th>
+                                    <th>Bidhaa</th>
+                                    <th>Idadi</th>
+                                    <th>Bei (TSh)</th>
+                                    <th>Jumla (TSh)</th>
+                                    <th>Mteja</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sales-data">
+                                <!-- Sales data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Muhtasari wa Mauzo</h2>
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <h3>Jumla ya Mauzo</h3>
+                            <p class="value" id="total-sales">TSh 0</p>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Jumla ya Faida</h3>
+                            <p class="value" id="total-profit">TSh 0</p>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Wastani wa Mauzo</h3>
+                            <p class="value" id="average-sale">TSh 0</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="sales-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="customers-tab">
+            <!-- Customers content remains the same as before -->
+            <div class="main-content">
+                <div class="card">
+                    <h2 class="card-title">Ongeza Mteja Mpya</h2>
+                    <form id="customer-form">
+                        <div class="form-group">
+                            <label for="customer-name">Jina la Mteja</label>
+                            <input type="text" id="customer-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-phone">Namba ya Simu</label>
+                            <input type="text" id="customer-phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-email">Barua Pepe</label>
+                            <input type="email" id="customer-email">
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-address">Anwani</label>
+                            <textarea id="customer-address" rows="2"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Hifadhi Mteja</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Orodha ya Wateja <span class="badge badge-success" id="customers-count">0</span></h2>
+                    <div style="overflow-x: auto;">
+                        <table id="customers-table">
+                            <thead>
+                                <tr>
+                                    <th>Jina</th>
+                                    <th>Simu</th>
+                                    <th>Barua Pepe</th>
+                                    <th>Jumla ya Nunua</th>
+                                    <th>Vitendo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customers-data">
+                                <!-- Customers data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="products-tab">
+            <!-- Products content remains the same as before -->
+            <div class="main-content">
+                <div class="card">
+                    <h2 class="card-title">Ongeza Bidhaa Mpya</h2>
+                    <form id="product-form">
+                        <div class="form-group">
+                            <label for="product-name">Jina la Bidhaa</label>
+                            <input type="text" id="product-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-cost">Bei ya Ununuzi (TSh)</label>
+                            <input type="number" id="product-cost" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-price">Bei ya Mauzo (TSh)</label>
+                            <input type="number" id="product-price" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-stock">Hisa za Bidhaa</label>
+                            <input type="number" id="product-stock" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-min-stock">Kiwango cha Chini cha Hisa</label>
+                            <input type="number" id="product-min-stock" min="0" value="5">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Hifadhi Bidhaa</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Orodha ya Bidhaa <span class="badge badge-success" id="products-count">0</span></h2>
+                    <div style="overflow-x: auto;">
+                        <table id="products-table">
+                            <thead>
+                                <tr>
+                                    <th>Jina</th>
+                                    <th>Bei ya Ununuzi</th>
+                                    <th>Bei ya Mauzo</th>
+                                    <th>Faida</th>
+                                    <th>Hisa</th>
+                                    <th>Vitendo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-data">
+                                <!-- Products data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Bidhaa Zinazokaribia Kuisha <span class="badge badge-danger" id="low-stock-count">0</span></h2>
+                    <div style="overflow-x: auto;">
+                        <table id="low-stock-table">
+                            <thead>
+                                <tr>
+                                    <th>Jina</th>
+                                    <th>Hisa Zilizobaki</th>
+                                    <th>Kiwango cha Chini</th>
+                                    <th>Hatua</th>
+                                </tr>
+                            </thead>
+                            <tbody id="low-stock-data">
+                                <!-- Low stock data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="analytics-tab">
+            <!-- Analytics content remains the same as before -->
+            <div class="main-content">
+                <div class="card">
+                    <h2 class="card-title">Mauzo Kwa Miezi</h2>
+                    <div class="chart-container">
+                        <canvas id="monthly-sales-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                <h2 class="card-title">Bidhaa Zinazouzia</h2>
+                    <div class="chart-container">
+                        <canvas id="top-products-chart"></canvas>
+                    </div>
+                </div>
+      
+                <div class="card">
+                    <h2 class="card-title">Wateja Wakuu</h2>
+                    <div class="chart-container">
+                        <canvas id="top-customers-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="debts-tab">
+            <!-- Debts content remains the same as before -->
+            <div class="main-content">
+                <div class="card">
+                    <h2 class="card-title">Deni Zilizopo <span class="badge badge-danger" id="debts-count">0</span></h2>
+                    <div style="overflow-x: auto;">
+                        <table id="debts-table">
+                            <thead>
+                                <tr>
+                                    <th>Mteja</th>
+                                    <th>Jumla ya Deni (TSh)</th>
+                                    <th>Tarehe ya Mwisho</th>
+                                    <th>Hali</th>
+                                    <th>Vitendo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="debts-data">
+                                <!-- Debts data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Ongeza Malipo ya Deni</h2>
+                    <form id="payment-form">
+                        <div class="form-group">
+                            <label for="debt-customer">Mteja</label>
+                            <select id="debt-customer" required>
+                                <option value="">Chagua mteja</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-amount">Kiasi (TSh)</label>
+                            <input type="number" id="payment-amount" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-date">Tarehe</label>
+                            <input type="date" id="payment-date" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Thibitisha Malipo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content" id="info-tab">
+            <div class="card">
+                <h2 class="card-title">Kuhusu Notes Book ya Mauzo</h2>
+                <div class="info-content">
+                    <p>Notes Book ya Mauzo ni programu ya MOSI GROUP LTD iliyotengenezwa na mohfunny na inayokusudia kurahisisha usimamizi wa biashara ndogo na kati. Programu hii imeundwa kwa kutumia teknolojia za HTML, CSS, na JavaScript.</p>
+                    
+                    <h3>Vipengele Mkuu</h3>
+                    <ul>
+                        <li>Usimamizi wa mauzo na rekodi za biashara</li>
+                        <li>Usimamizi wa orodha ya bidhaa na hisa</li>
+                        <li>Usimamizi wa wateja na deni</li>
+                        <li>Uchambuzi wa mauzo na viwango cha biashara</li>
+                        <li>Uwekaji kumbukumbu na uhifadhi wa data</li>
+                    </ul>
+                    
+                    <h3>Madhumuni ya Programu</h3>
+                    <p>Programu hii imeundwa ili kuwasaidia wafanyabiashara kudumisha kumbukumbu sahihi za mauzo, kufuatilia mauzo na faida, na kupata taarifa muhimu kuhusu biashara yao.</p>
+                    
+                    <h3>Maelezo ya Tekinolojia</h3>
+                    <p>Programu hii inatumia:</p>
+                    <ul>
+                        <li>HTML5 kwa muundo wa wavuti</li>
+                        <li>CSS3 kwa mitindo na ubunifu</li>
+                        <li>JavaScript kwa mantiki ya programu</li>
+                        <li>Chart.js kwa michoro na maonyesho ya takwimu</li>
+                        <li>LocalStorage kuhifadhi data ndani ya kivinjari</li>
+                    </ul>
+                    
+                    <h3>Maelezo ya Matumizi</h3>
+                    <p>Programu hii inaweza kutumika kwenye vivinjari vyovyote vya kisasa kama vile Chrome, Firefox, Safari, na Edge. Hakikisha unaunganishwa na mtandao ili kupakua rasilimali za ziada.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="policy-tab">
+            <div class="card">
+                <h2 class="card-title">Sera na Masharti ya Utumiaji</h2>
+                <div class="info-content">
+                    <div class="policy-section">
+                        <h3>Sera ya Faragha</h3>
+                        <p>Notes Book ya Mauzo inathamini na kulinda faragha yako. Data yote unayoingiza kwenye programu hii imehifadhiwa ndani ya kivinjari chako na haipeani na mtu yeyote. Hatutoi taarifa zako kwa mtu yeyote bila idhini yako.</p>
+                    </div>
+                    
+                    <div class="policy-section">
+                        <h3>Hifadhi ya Data</h3>
+                        <p>Data yako yote huhifadhiwa kwenye kivinjari chako kwa kutumia localStorage. Hii inamaanisha kuwa data yako haitumiki na vivinjari vingine au vifaa vingine. Ni muhimu kuhifadhi nakala ya data yako mara kwa mara kwa kubonyeza kitufe cha "Hifadhi Data".</p>
+                    </div>
+                    
+                    <div class="policy-section">
+                        <h3>Masharti ya Utumiaji</h3>
+                        <p>Kwa kutumia programu hii, unakubali:</p>
+                        <ul>
+                            <li>Kutumia programu hii kwa madhumuni ya kisheria pekee</li>
+                            <li>Kutoharibu au kujaribu kuvunja utulivu wa programu</li>
+                            <li>Kuhifadhi data yako mwenyewe na kuchukua jukumu la usalama wake</li>
+                            <li>Kutotumia programu kwa kusambaza maudhui haramu, ya kudhalilisha, au yasiyo ya kimaadili</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="policy-section">
+                        <h3>Haki za Kimiliki</h3>
+                        <p>Programu hii na yaliyomo ndani yake ni mali ya miliki ya muundishi wake. Hairuhusiwi kunakili, kusambaza, au kuitumia kwa madhumuni ya kibiashara bila idhini maalum.</p>
+                    </div>
+                    
+                    <div class="policy-section">
+                        <h3>Hati na Udhibiti wa Ubora</h3>
+                        <p>Programu hii imeundwa kwa uangalifu mkubwa, lakini haina udhibiti wa makosa yote. Tunapendekeza kufanya uchunguzi wako mwenyewe na kuhifadhi data yako mara kwa mara. Hatutakuwa na jukumu kwa hasara yoyote inayotokana na matumizi ya programu hii.</p>
+                    </div>
+                    
+                    <div class="policy-section">
+                        <h3>Mabadiliko ya Sera</h3>
+                        <p>Hifadhi hii ya kuhifadhi data ina haki ya kubadilisha sera yake wakati wowote bila taarifa yoyote. Tafadhali fuatilia kurasa hii mara kwa mara kwa mabadiliko yoyote.</p>
+                    </div>
+                  
+                    <div class="policy-section">
+                        <h3>Mawasiliano</h3>
+                        <p>Kama una maswali yoyote kuhusu sera hizi, tafadhali wasiliana nasi kupitia anwani ya barua pepe iliyowekwa kwenye programu 
+                    </p>   
+                  </div>
+             </div>
+         </div>
+     </div>          
+                                                   
+        <footer>
+            <p>Notes Book ya Mauzo - Toleo Kamili &copy; 2025 Create by Mohfunny | 
+                <a href="#" onclick="showTab('info')">Maelezo</a> | 
+                <a href="#" onclick="showTab('policy')">Sera</a>
+            </p>
+        </footer>
+    </div>
+
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">Operesheni imefanikiwa!</span>       
+      </div>
+        <div class="tab-content" id="chat-tab">
+            <div class="card">
+                <h2 class="card-title">Chat nasi WhatsApp </h2>
+                <div class="chat-content">
+                    <h3>+255 625 173 554</h3>
+                    <p>Follow Instagram Mohfunny_</p>
+     
+    
+    <script>        
+          
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+    }
+      
+                   
+           // Data storage
+        let sales = JSON.parse(localStorage.getItem('sales')) || [];
+        let customers = JSON.parse(localStorage.getItem('customers')) || [];
+        let products = JSON.parse(localStorage.getItem('products')) || [];
+        let debts = JSON.parse(localStorage.getItem('debts')) || [];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date as default
+            document.getElementById('date').valueAsDate = new Date();
+            document.getElementById('payment-date').valueAsDate = new Date();
+            
+            // Load initial data
+            loadProducts();
+            loadCustomers();
+            loadSales();
+            loadDebts();
+            updateSummary();
+            updateCharts();
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+
+        // Setup all event listeners
+        function setupEventListeners() {
+            // Form submissions
+            document.getElementById('sales-form').addEventListener('submit', addSale);
+            document.getElementById('customer-form').addEventListener('submit', addCustomer);
+            document.getElementById('product-form').addEventListener('submit', addProduct);
+            document.getElementById('payment-form').addEventListener('submit', addPayment);
+            
+            // Tab switching
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    switchTab(tab.getAttribute('data-tab'));
+                });
+            });
+            
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            
+            // Backup button
+            document.getElementById('backup-btn').addEventListener('click', backupData);
+        }
+
+        
+        
+        
+        
+        
+        
+        
+          // Switch tabs
+        function switchTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+
+        // Show specific tab from footer links
+        function showTab(tabName) {
+            switchTab(tabName);
+            window.scrollTo(0, 0);
+        }
+                                             
+                     
+        // Load products into dropdown and table
+        function loadProducts() {
+            const productSelect = document.getElementById('product');
+            const productsTable = document.getElementById('products-data');
+            const lowStockTable = document.getElementById('low-stock-data');
+            
+            // Clear existing options
+            productSelect.innerHTML = '<option value="">Chagua bidhaa</option>';
+            productsTable.innerHTML = '';
+            lowStockTable.innerHTML = '';
+            
+            let lowStockCount = 0;
+            
+            // Add products to dropdown and table
+            products.forEach(product => {
+                // Add to dropdown
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.textContent = product.name;
+                option.setAttribute('data-price', product.price);
+                productSelect.appendChild(option);
+                
+                // Calculate profit
+                const profit = product.price - product.cost;
+                const profitPercentage = ((profit / product.cost) * 100).toFixed(2);
+                
+                // Add to products table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.name}</td>
+                    <td>TSh ${product.cost.toLocaleString()}</td>
+                    <td>TSh ${product.price.toLocaleString()}</td>
+                    <td>TSh ${profit.toLocaleString()} (${profitPercentage}%)</td>
+                    <td>${product.stock}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteProduct(${product.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                productsTable.appendChild(row);
+                
+                // Check for low stock
+                if (product.stock <= product.minStock) {
+                    lowStockCount++;
+                    const lowStockRow = document.createElement('tr');
+                    lowStockRow.innerHTML = `
+                        <td>${product.name}</td>
+                        <td class="${product.stock === 0 ? 'badge-danger' : 'badge-warning'}">${product.stock}</td>
+                        <td>${product.minStock}</td>
+                        <td>
+                            <button class="btn btn-primary" onclick="restockProduct(${product.id})">
+                                <i class="fas fa-plus"></i> Ongeza Hisa
+                            </button>
+                        </td>
+                    `;
+                    lowStockTable.appendChild(lowStockRow);
+                }
+            });
+            
+            // Update low stock count
+            document.getElementById('low-stock-count').textContent = lowStockCount;
+            document.getElementById('products-count').textContent = products.length;
+            
+            // Update product price when selected
+            productSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    document.getElementById('price').value = selectedOption.getAttribute('data-price');
+                }
+            });
+        }
+
+        // Load customers into dropdown and table
+        function loadCustomers() {
+            const customerSelect = document.getElementById('customer');
+            const debtCustomerSelect = document.getElementById('debt-customer');
+            const customersTable = document.getElementById('customers-data');
+            
+            // Clear existing options
+            customerSelect.innerHTML = '<option value="">Chagua mteja</option>';
+            debtCustomerSelect.innerHTML = '<option value="">Chagua mteja</option>';
+            customersTable.innerHTML = '';
+            
+            // Add customers to dropdowns and table
+            customers.forEach(customer => {
+                // Add to customer dropdown
+                const option = document.createElement('option');
+                option.value = customer.id;
+                option.textContent = customer.name;
+                customerSelect.appendChild(option);
+                
+                // Add to debt customer dropdown
+                const debtOption = document.createElement('option');
+                debtOption.value = customer.id;
+                debtOption.textContent = customer.name;
+                debtCustomerSelect.appendChild(debtOption);
+                
+                // Calculate total purchases
+                const customerSales = sales.filter(sale => sale.customerId === customer.id);
+                const totalPurchases = customerSales.reduce((total, sale) => total + sale.total, 0);
+                
+                // Add to customers table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${customer.name}</td>
+                    <td>${customer.phone || '-'}</td>
+                    <td>${customer.email || '-'}</td>
+                    <td>TSh ${totalPurchases.toLocaleString()}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteCustomer(${customer.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                customersTable.appendChild(row);
+            });
+            
+            // Update customers count
+            document.getElementById('customers-count').textContent = customers.length;
+        }
+
+        // Load sales into table
+        function loadSales() {
+            const salesTable = document.getElementById('sales-data');
+            
+            // Clear existing data
+            salesTable.innerHTML = '';
+            
+            // Add sales to table
+            sales.forEach(sale => {
+                const product = products.find(p => p.id === sale.productId) || { name: 'Unknown' };
+                const customer = customers.find(c => c.id === sale.customerId) || { name: 'Guest' };
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${formatDate(sale.date)}</td>
+                    <td>${product.name}</td>
+                    <td>${sale.quantity}</td>
+                    <td>TSh ${sale.price.toLocaleString()}</td>
+                    <td>TSh ${sale.total.toLocaleString()}</td>
+                    <td>${customer.name}</td>
+                `;
+                salesTable.appendChild(row);
+            });
+            
+            // Update sales count
+            document.getElementById('sales-count').textContent = sales.length;
+        }
+
+        // Load debts into table
+        function loadDebts() {
+            const debtsTable = document.getElementById('debts-data');
+            
+            // Clear existing data
+            debtsTable.innerHTML = '';
+            
+            // Add debts to table
+            debts.forEach(debt => {
+                const customer = customers.find(c => c.id === debt.customerId) || { name: 'Unknown' };
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${customer.name}</td>
+                    <td>TSh ${debt.amount.toLocaleString()}</td>
+                    <td>${formatDate(debt.dueDate)}</td>
+                    <td><span class="badge ${debt.amount > 0 ? 'badge-danger' : 'badge-success'}">${debt.amount > 0 ? 'Ina deni' : 'Ameshalipa'}</span></td>
+                    <td>
+                        <button class="btn btn-primary" onclick="addPaymentForDebt(${debt.id})">
+                            <i class="fas fa-money-bill"></i> Lipa
+                        </button>
+                    </td>
+                `;
+                debtsTable.appendChild(row);
+            });
+            
+            // Update debts count
+            const activeDebts = debts.filter(debt => debt.amount > 0).length;
+            document.getElementById('debts-count').textContent = activeDebts;
+        }
+
+        // Add a new sale
+        function addSale(e) {
+            e.preventDefault();
+            
+            const productId = parseInt(document.getElementById('product').value);
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const price = parseInt(document.getElementById('price').value);
+            const customerId = parseInt(document.getElementById('customer').value) || null;
+            const date = document.getElementById('date').value;
+            const paymentType = document.getElementById('payment-type').value;
+            
+            const product = products.find(p => p.id === productId);
+            if (!product) {
+                showNotification('Tafadhali chagua bidhaa', 'error');
+                return;
+            }
+            
+            // Check if there's enough stock
+            if (product.stock < quantity) {
+                showNotification('Hisa za bidhaa hazitoshi. Nyingine zipo: ' + product.stock, 'error');
+                return;
+            }
+            
+            const total = quantity * price;
+            const profit = (price - product.cost) * quantity;
+            
+            // Create sale object
+            const sale = {
+                id: Date.now(),
+                productId,
+                quantity,
+                price,
+                total,
+                profit,
+                customerId,
+                date,
+                paymentType
+            };
+            
+            // Add to sales array
+            sales.push(sale);
+            
+            // Update product stock
+            product.stock -= quantity;
+            
+            // If payment type is debt, add to debts
+            if (paymentType === 'debt' && customerId) {
+                const existingDebt = debts.find(d => d.customerId === customerId);
+                if (existingDebt) {
+                    existingDebt.amount += total;
+                } else {
+                    const dueDate = new Date();
+                    dueDate.setDate(dueDate.getDate() + 30); // Due in 30 days
+                    
+                    debts.push({
+                        id: Date.now(),
+                        customerId,
+                        amount: total,
+                        dueDate: dueDate.toISOString().split('T')[0]
+                    });
+                }
+            }
+            
+            // Save to localStorage
+            saveData();
+            
+            // Update UI
+            loadSales();
+            loadProducts();
+            loadProducts();
+            loadDebts();
+            updateSummary();
+            updateCharts();
+            
+            // Reset form
+            document.getElementById('sales-form').reset();
+            document.getElementById('date').valueAsDate = new Date();
+            
+            showNotification('Mauzo yameongezwa kikamilifu');
+        }
+
+        // Add a new customer
+        function addCustomer(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('customer-name').value;
+            const phone = document.getElementById('customer-phone').value;
+            const email = document.getElementById('customer-email').value;
+            const address = document.getElementById('customer-address').value;
+            
+            // Create customer object
+            const customer = {
+                id: Date.now(),
+                name,
+                phone,
+                email,
+                address
+            };
+            
+            // Add to customers array
+            customers.push(customer);
+            
+            // Save to localStorage
+            saveData();
+            
+            // Update UI
+            loadCustomers();
+            
+            // Reset form
+            document.getElementById('customer-form').reset();
+            
+            showNotification('Mteja ameongezwa kikamilifu');
+        }
+
+        // Add a new product
+        function addProduct(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('product-name').value;
+            const cost = parseInt(document.getElementById('product-cost').value);
+            const price = parseInt(document.getElementById('product-price').value);
+            const stock = parseInt(document.getElementById('product-stock').value);
+            const minStock = parseInt(document.getElementById('product-min-stock').value);
+            
+            // Create product object
+            const product = {
+                id: Date.now(),
+                name,
+                cost,
+                price,
+                stock,
+                minStock
+            };
+            
+            // Add to products array
+            products.push(product);
+            
+            // Save to localStorage
+            saveData();
+            
+            // Update UI
+            loadProducts();
+            
+            // Reset form
+            document.getElementById('product-form').reset();
+            
+            showNotification('Bidhaa imeongezwa kikamilifu');
+        }
+
+        // Add a payment for debt
+        function addPayment(e) {
+            e.preventDefault();
+            
+            const customerId = parseInt(document.getElementById('debt-customer').value);
+            const amount = parseInt(document.getElementById('payment-amount').value);
+            const date = document.getElementById('payment-date').value;
+            
+            if (!customerId) {
+                showNotification('Tafadhali chagua mteja', 'error');
+                return;
+            }
+            
+            // Find customer's debt
+            const debt = debts.find(d => d.customerId === customerId);
+            if (!debt) {
+                showNotification('Mteja hana deni', 'error');
+                return;
+            }
+            
+            if (amount > debt.amount) {
+                showNotification('Kiasi kilichowekwa kinazidi deni', 'error');
+                return;
+            }
+            
+            // Update debt amount
+            debt.amount -= amount;
+            
+            // If debt is fully paid, remove it
+            if (debt.amount === 0) {
+                debts = debts.filter(d => d.id !== debt.id);
+            }
+            
+            // Save to localStorage
+            saveData();
+            
+            // Update UI
+            loadDebts();
+            
+            // Reset form
+            document.getElementById('payment-form').reset();
+            document.getElementById('payment-date').valueAsDate = new Date();
+            
+            showNotification('Malipo yameongezwa kikamilifu');
+        }
+
+        // Update summary cards
+        function updateSummary() {
+            // Calculate total sales
+            const totalSales = sales.reduce((total, sale) => total + sale.total, 0);
+            
+            // Calculate total profit
+            const totalProfit = sales.reduce((total, sale) => total + sale.profit, 0);
+            
+            // Calculate average sale
+            const averageSale = sales.length > 0 ? totalSales / sales.length : 0;
+            
+            // Update DOM
+            document.getElementById('total-sales').textContent = `TSh ${totalSales.toLocaleString()}`;
+            document.getElementById('total-profit').textContent = `TSh ${totalProfit.toLocaleString()}`;
+            document.getElementById('average-sale').textContent = `TSh ${averageSale.toLocaleString()}`;
+        }
+
+        // Update charts
+        function updateCharts() {
+            // Sales chart (last 7 days)
+            const last7Days = [...Array(7)].map((_, i) => {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                return d.toISOString().split('T')[0];
+            }).reverse();
+            
+            const salesByDay = last7Days.map(date => {
+                const daySales = sales.filter(sale => sale.date === date);
+                return daySales.reduce((total, sale) => total + sale.total, 0);
+            });
+            
+            const salesCtx = document.getElementById('sales-chart').getContext('2d');
+            if (window.salesChartInstance) {
+                window.salesChartInstance.destroy();
+            }
+            window.salesChartInstance = new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: last7Days.map(d => formatDate(d)),
+                    datasets: [{
+                        label: 'Mauzo kwa siku (TSh)',
+                        data: salesByDay,
+                        borderColor: '#4361ee',
+                        backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Monthly sales chart
+            const months = ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ago', 'Sep', 'Okt', 'Nov', 'Dec'];
+            const currentYear = new Date().getFullYear();
+            const salesByMonth = months.map((_, i) => {
+                const monthSales = sales.filter(sale => {
+                    const saleDate = new Date(sale.date);
+                    return saleDate.getFullYear() === currentYear && saleDate.getMonth() === i;
+                });
+                return monthSales.reduce((total, sale) => total + sale.total, 0);
+            });
+            
+            const monthlySalesCtx = document.getElementById('monthly-sales-chart').getContext('2d');
+            if (window.monthlySalesChartInstance) {
+                window.monthlySalesChartInstance.destroy();
+            }
+            window.monthlySalesChartInstance = new Chart(monthlySalesCtx, {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Mauzo kwa mwezi (TSh)',
+                        data: salesByMonth,
+                        backgroundColor: '#4cc9f0'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Top products chart
+            const productSales = {};
+            sales.forEach(sale => {
+                const product = products.find(p => p.id === sale.productId);
+                if (product) {
+                    if (!productSales[product.name]) {
+                        productSales[product.name] = 0;
+                    }
+                    productSales[product.name] += sale.quantity;
+                }
+            });
+            
+            const topProducts = Object.entries(productSales)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+            
+            const topProductsCtx = document.getElementById('top-products-chart').getContext('2d');
+            if (window.topProductsChartInstance) {
+                window.topProductsChartInstance.destroy();
+            }
+            window.topProductsChartInstance = new Chart(topProductsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: topProducts.map(p => p[0]),
+                    datasets: [{
+                        label: 'Bidhaa Zinazouzia',
+                        data: topProducts.map(p => p[1]),
+                        backgroundColor: ['#4361ee', '#4cc9f0', '#4895ef', '#3f37c9', '#7209b7']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Top customers chart
+            const customerPurchases = {};
+            sales.forEach(sale => {
+                if (sale.customerId) {
+                    const customer = customers.find(c => c.id === sale.customerId);
+                    if (customer) {
+                        if (!customerPurchases[customer.name]) {
+                            customerPurchases[customer.name] = 0;
+                        }
+                        customerPurchases[customer.name] += sale.total;
+                    }
+                }
+            });
+          const topCustomers = Object.entries(customerPurchases)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+            
+            const topCustomersCtx = document.getElementById('top-customers-chart').getContext('2d');
+            if (window.topCustomersChartInstance) {
+                window.topCustomersChartInstance.destroy();
+            }
+            window.topCustomersChartInstance = new Chart(topCustomersCtx, {
+                type: 'pie',
+                data: {
+                    labels: topCustomers.map(c => c[0]),
+                    datasets: [{
+                        label: 'Wateja Wakuu',
+                        data: topCustomers.map(c => c[1]),
+                        backgroundColor: ['#4361ee', '#4cc9f0', '#4895ef', '#3f37c9', '#7209b7']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Save all data to localStorage
+        function saveData() {
+            localStorage.setItem('sales', JSON.stringify(sales));
+            localStorage.setItem('customers', JSON.stringify(customers));
+            localStorage.setItem('products', JSON.stringify(products));
+            localStorage.setItem('debts', JSON.stringify(debts));
+        }
+
+        // Backup data to a file
+        function backupData() {
+            const data = {
+                sales,
+                customers,
+                products,
+                debts,
+                backupDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(data);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `mauzo-backup-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification('Data zimehifadhiwa kikamilifu');
+        }
+
+        // Toggle between light and dark mode
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const themeToggle = document.getElementById('theme-toggle');
+            const icon = themeToggle.querySelector('i');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Badilisha Muda';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Badilisha Muda';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            
+            notificationText.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Format date to readable format
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('sw-TZ', options);
+        }
+
+        // Delete a product
+        function deleteProduct(id) {
+            if (confirm('Una uhakika unataka kufuta bidhaa hii?')) {
+                products = products.filter(p => p.id !== id);
+                saveData();
+                loadProducts();
+                showNotification('Bidhaa imefutwa kikamilifu');
+            }
+        }
+
+        // Delete a customer
+        function deleteCustomer(id) {
+            if (confirm('Una uhakika unataka kufuta mteja huyu?')) {
+                customers = customers.filter(c => c.id !== id);
+                saveData();
+                loadCustomers();
+                showNotification('Mteja amefutwa kikamilifu');
+            }
+        }
+
+        // Restock a product
+        function restockProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                const newStock = parseInt(prompt(`Ongeza hisa za ${product.name}. Hisa zilizopo: ${product.stock}`));
+                if (!isNaN(newStock) && newStock > 0) {
+                    product.stock += newStock;
+                    saveData();
+                    loadProducts();
+                    showNotification(`Hisa za ${product.name} zimeongezwa kikamilifu`);
+                }
+            }
+        }
+
+        // Add payment for a specific debt
+        function addPaymentForDebt(debtId) {
+            const debt = debts.find(d => d.id === debtId);
+            if (debt) {
+                document.getElementById('debt-customer').value = debt.customerId;
+                document.getElementById('payment-amount').value = debt.amount;
+                document.getElementById('payment-date').valueAsDate = new Date();
+                
+                // Switch to debts tab
+                switchTab('debts');
+                
+                showNotification('Tafadhali weka malipo ya deni kwenye fomu');
+            }
+        }
+
+        // Check if dark mode was previously set
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            const themeToggle = document.getElementById('theme-toggle');
+            const icon = themeToggle.querySelector('i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i> Badilisha Muda';
+        }  
+      
+        // JavaScript for tab navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Here you would typically show the corresponding content section
+                    // This is just a basic example
+                });
+            });
+
+            // Disable double-tap zoom
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+
+            // Disable pinch zoom
+            document.addEventListener('gesturestart', function (e) {
+                e.preventDefault();
+            });
+
+            // AI Chat functionality
+            const aiChatBtn = document.getElementById('aiChatBtn');
+            const openAiChat = document.getElementById('openAiChat');
+            const aiChatContainer = document.getElementById('aiChatContainer');
+            const closeAiChat = document.getElementById('closeAiChat');
+            const aiChatInput = document.getElementById('aiChatInput');
+            const aiSendBtn = document.getElementById('aiSendBtn');
+            const aiChatMessages = document.getElementById('aiChatMessages');
+
+            // Open AI chat
+            function openChat() {
+                aiChatContainer.style.display = 'flex';
+                aiChatBtn.style.display = 'none';
+            }
+
+            // Close AI chat
+            function closeChat() {
+                aiChatContainer.style.display = 'none';
+                aiChatBtn.style.display = 'flex';
+            }
+
+            aiChatBtn.addEventListener('click', openChat);
+            openAiChat.addEventListener('click', openChat);
+            closeAiChat.addEventListener('click', closeChat);
+
+            // Send message function
+            function sendMessage() {
+                const message = aiChatInput.value.trim();
+                if (message === '') return;
+
+                // Add user message
+                const userMessageEl = document.createElement('div');
+                userMessageEl.classList.add('ai-message', 'ai-user');
+                userMessageEl.textContent = message;
+                aiChatMessages.appendChild(userMessageEl);
+
+                // Clear input
+                aiChatInput.value = '';
+
+                // Scroll to bottom
+                aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+
+                // Simulate AI response
+                setTimeout(() => {
+                    const botMessageEl = document.createElement('div');
+                    botMessageEl.classList.add('ai-message', 'ai-bot');
+                    
+                    // Simple response logic based on keywords
+                    if (message.toLowerCase().includes('mauzo') || message.toLowerCase().includes('kuuza')) {
+                        botMessageEl.textContent = "Ili kuongeza mauzo mapya, nenda kwenye sehemu ya 'Ongeza Mauzo Mapya', chagua bidhaa, weka idadi na bei, chagua mteja, weka tarehe na aina ya malipo, kisha bofya 'Weka Mauzo'.";
+                    } else if (message.toLowerCase().includes('wateja') || message.toLowerCase().includes('mteja')) {
+                        botMessageEl.textContent = "Unaweza kudhibiti orodha ya wateja kwa kubofya kichupo cha 'Wateja'. Hapa utaweza kuongeza wateja wapya, kuhariri taarifa za wateja, na kuona historia ya mauzo ya kila mteja.";
+                    } else if (message.toLowerCase().includes('bidhaa') || message.toLowerCase().includes('product')) {
+                        botMessageEl.textContent = "Kudhibiti bidhaa, bofya kichupo cha 'Bidhaa'. Hapa utaweza kuongeza bidhaa mpya, weka bei, badilisha bei, na kuona bidhaa zilizopo kwenye hesabu yako.";
+                    } else if (message.toLowerCase().includes('takwimu') || message.toLowerCase().includes('taarifa')) {
+                        botMessageEl.textContent = "Takwimu za mauzo zinaonyesha muundo wa mauzo yako kwa mujibu wa muda au kategoria. Unaweza kuona mauzo kwa miezi, wiki au siku. Nenda kwenye kichupo cha 'Takwimu' kuona michoro na ratiba za mauzo yako.";
+                    } else if (message.toLowerCase().includes('deni') || message.toLowerCase().includes('mkopo')) {
+                        botMessageEl.textContent = "Sehemu ya 'Deni' inakuwezesha kuona orodha ya wateja waliokopa na kiasi walichokopa. Pia unaweza kuingiza malipo ya deni na kufuatilia deni linalobaki.";
+                    } else {
+                        botMessageEl.textContent = "Asante kwa swali lako. Ninafahamu mfumo wa Notes Book ya Mauzo kwa kina na naweza kukusaidia kujua jinsi ya kutumia sehemu mbalimbali. Una swali jingine?";
+                    }
+                    
+                    aiChatMessages.appendChild(botMessageEl);
+                    aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+                }, 1000);
+            }
+
+            aiSendBtn.addEventListener('click', sendMessage);
+            aiChatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+        
+    </script>
+</body>
+</html>
